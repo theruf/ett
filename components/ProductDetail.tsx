@@ -81,7 +81,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
         )}
       </div>
 
-      <div className="flex flex-col gap-4 order-1 lg:order-1 lg:sticky lg:top-20">
+      <div className="flex flex-col gap-4 order-1 lg:order-1 lg:sticky lg:top-4">
         <div className="flex flex-col gap-1">
           <p className="so-body text-gray-text capitalize">{product.category}</p>
           <h1 className="so-heading text-gray-dark flex-1">{product.title}</h1>
