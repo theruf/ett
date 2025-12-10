@@ -1,0 +1,178 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global styles for ÉTT Market */
+
+@font-face {
+  font-family: "Inter";
+  src: url("https://framerusercontent.com/assets/mvNEIBLyHbscgHtwfsByjXUz3XY.woff2")
+    format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMw2boKudaGMwk.woff2")
+    format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("https://fonts.gstatic.com/s/inter/v13/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMw2boKudSGMwk.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --so-letter-spacing: -0.04em;
+  --so-line-height: 1.2;
+  --so-heading-desktop: 33px;
+  --so-heading-tablet: 27px;
+  --so-heading-mobile: 23px;
+  --so-body-desktop: 17px;
+  --so-body-tablet: 17px;
+  --so-body-mobile: 17px;
+  --so-meta-desktop: 15px;
+  --so-meta-tablet: 15px;
+  --so-meta-mobile: 15px;
+}
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    font-family: "Inter", "Inter Placeholder", sans-serif;
+    @apply text-gray-dark;
+  }
+
+  /* Remove default link styles */
+  a {
+    @apply no-underline;
+  }
+
+  /* Remove default button styles */
+  button {
+    @apply outline-none;
+  }
+}
+
+@layer components {
+  .so-heading {
+    font-weight: 600;
+    letter-spacing: var(--so-letter-spacing);
+    line-height: var(--so-line-height);
+    font-size: var(--so-heading-mobile);
+  }
+
+  @media (min-width: 810px) {
+    .so-heading {
+      font-size: var(--so-heading-tablet);
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .so-heading {
+      font-size: var(--so-heading-desktop);
+    }
+  }
+
+  .so-body {
+    font-weight: 400;
+    letter-spacing: var(--so-letter-spacing);
+    line-height: var(--so-line-height);
+    font-size: var(--so-body-mobile);
+    color: #111111;
+  }
+
+  @media (min-width: 810px) {
+    .so-body {
+      font-size: var(--so-body-tablet);
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .so-body {
+      font-size: var(--so-body-desktop);
+    }
+  }
+
+  .so-meta {
+    font-weight: 400;
+    letter-spacing: var(--so-letter-spacing);
+    line-height: var(--so-line-height);
+    font-size: var(--so-meta-mobile);
+  }
+
+  @media (min-width: 810px) {
+    .so-meta {
+      font-size: var(--so-meta-tablet);
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .so-meta {
+      font-size: var(--so-meta-desktop);
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .so-meta {
+      font-size: var(--so-meta-desktop);
+    }
+  }
+
+  .so-link {
+    color: #000;
+    transition: color 0.2s cubic-bezier(0.44, 0, 0.56, 1);
+  }
+
+  .so-link:hover {
+    color: #9e9e9e;
+  }
+
+  .so-nav {
+    font-weight: 400;
+    letter-spacing: var(--so-letter-spacing);
+    line-height: var(--so-line-height);
+    font-size: 17px;
+  }
+
+  @media (min-width: 810px) {
+    .so-nav {
+      font-size: 17px;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .so-nav {
+      font-size: 17px;
+    }
+  }
+}
+
+/* Text utilities */
+@layer utilities {
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
