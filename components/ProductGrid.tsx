@@ -60,22 +60,20 @@ export default function ProductGrid({ products }: ProductGridProps) {
 
   return (
     <>
-      <div className="flex items-center justify-between mb-8">
-        <div className="border border-gray-light px-4 py-2 bg-white rounded-sm">
-          <select
-            className="so-body text-gray-dark bg-transparent outline-none pr-6"
-            value={sortOrder}
-            onChange={(e) =>
-              setSortOrder(e.target.value as SortOrder)
-            }
-          >
-            <option value="default">Sort by Default</option>
-            <option value="priceDesc">Price: High to Low</option>
-            <option value="priceAsc">Price: Low to High</option>
-            <option value="newest">Date: New to Old</option>
-            <option value="oldest">Date: Old to New</option>
-          </select>
-        </div>
+      <div className="flex items-center gap-4 mb-8">
+        <select
+          className="so-body text-gray-dark bg-transparent outline-none px-0 py-0 border-none"
+          value={sortOrder}
+          onChange={(e) =>
+            setSortOrder(e.target.value as SortOrder)
+          }
+        >
+          <option value="default">Sort by Default</option>
+          <option value="priceDesc">Price: High to Low</option>
+          <option value="priceAsc">Price: Low to High</option>
+          <option value="newest">Date: New to Old</option>
+          <option value="oldest">Date: Old to New</option>
+        </select>
         <div className="so-body text-gray-dark">{sortedProducts.length} items</div>
       </div>
 
