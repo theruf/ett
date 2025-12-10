@@ -24,7 +24,16 @@ export default function ProductCard({ product }: ProductCardProps) {
             src={product.images[0]}
             alt={product.title}
             fill
-            className="object-cover"
+            className="object-cover transition-opacity duration-300 ease-in-out hover:opacity-0"
+            sizes="(max-width: 1024px) 50vw, 25vw"
+          />
+        )}
+        {product.images.length > 1 && (
+          <Image
+            src={product.images[1]}
+            alt={product.title}
+            fill
+            className="object-cover opacity-0 transition-opacity duration-300 ease-in-out hover:opacity-100"
             sizes="(max-width: 1024px) 50vw, 25vw"
           />
         )}
@@ -36,7 +45,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           <h3 className="so-body text-gray-dark font-normal mb-0.5 line-clamp-2 flex-1">
             {product.title}
           </h3>
-          <p className="text-[10px] text-gray-text shrink-0">
+          <p className="so-heading font-normal text-gray-text shrink-0">
             {product.price !== null ? `$${product.price}` : ""}
           </p>
         </div>
