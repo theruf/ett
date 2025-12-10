@@ -42,7 +42,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
       <div className="flex flex-col gap-3 order-1">
         <div
           className="relative w-full bg-gray-lightest overflow-hidden"
-          style={{ aspectRatio: "4 / 5" }}
+          style={{ aspectRatio: "1 / 1" }}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
@@ -86,7 +86,9 @@ export default function ProductDetail({ product }: ProductDetailProps) {
           <div className="flex items-end gap-2">
             <h1 className="so-heading text-gray-dark flex-1">{product.title}</h1>
             {product.price !== null && (
-              <p className="so-body text-gray-dark text-right self-end">{`$${product.price}`}</p>
+              <p className="so-heading font-normal text-gray-dark text-right leading-tight self-end">
+                {`$${product.price}`}
+              </p>
             )}
           </div>
         </div>
