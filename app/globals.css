@@ -34,15 +34,15 @@
 :root {
   --so-letter-spacing: -0.04em;
   --so-line-height: 1.2;
-  --so-heading-desktop: 33px;
-  --so-heading-tablet: 27px;
-  --so-heading-mobile: 23px;
-  --so-body-desktop: 17px;
-  --so-body-tablet: 17px;
-  --so-body-mobile: 17px;
-  --so-meta-desktop: 15px;
-  --so-meta-tablet: 15px;
-  --so-meta-mobile: 15px;
+  --so-heading-desktop: 30px;
+  --so-heading-tablet: 24px;
+  --so-heading-mobile: 20px;
+  --so-body-desktop: 14px;
+  --so-body-tablet: 14px;
+  --so-body-mobile: 14px;
+  --so-meta-desktop: 12px;
+  --so-meta-tablet: 12px;
+  --so-meta-mobile: 12px;
 }
 
 @layer base {
@@ -144,18 +144,18 @@
     font-weight: 400;
     letter-spacing: var(--so-letter-spacing);
     line-height: var(--so-line-height);
-    font-size: 17px;
+    font-size: 14px;
   }
 
   @media (min-width: 810px) {
     .so-nav {
-      font-size: 17px;
+      font-size: 14px;
     }
   }
 
   @media (min-width: 1200px) {
     .so-nav {
-      font-size: 17px;
+      font-size: 14px;
     }
   }
 }

@@ -37,7 +37,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           <h3 className="so-body text-gray-dark font-normal mb-0.5 line-clamp-2 flex-1">
             {product.title}
           </h3>
-          <p className="text-[13px] text-gray-text shrink-0">${product.price}</p>
+          <p className="text-[10px] text-gray-text shrink-0">${product.price}</p>
         </div>
         <p
           className={`so-meta text-gray-text ${
