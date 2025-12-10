@@ -1,6 +1,8 @@
 import { supabase } from "./supabaseClient";
 import type { Category, Product } from "./types";
 
+export type ProductWithSlug = Product & { slug: string };
+
 function mapProduct(row: any): Product {
   return {
     ...row,
@@ -11,46 +13,38 @@ function mapProduct(row: any): Product {
   } as Product;
 }
 
-export async function getAllProducts(): Promise<Product[]> {
+async function fetchAllWithSlugs(): Promise<ProductWithSlug[]> {
   const { data, error } = await supabase
     .from("products")
     .select("*")
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: true });
 
   if (error) {
     console.error("Failed to fetch products", error);
     return [];
   }
 
-  return (data || []).map(mapProduct);
+  return (data || []).map(mapProduct).map((row, idx) => ({ ...row, slug: `${idx + 1}` }));
 }
 
-export async function getProductsByCategory(category: Category): Promise<Product[]> {
-  const { data, error } = await supabase
-    .from("products")
-    .select("*")
-    .eq("category", category)
-    .order("created_at", { ascending: false });
-
-  if (error) {
-    console.error("Failed to fetch products by category", error);
-    return [];
-  }
-
-  return (data || []).map(mapProduct);
+export async function getAllProducts(): Promise<ProductWithSlug[]> {
+  const all = await fetchAllWithSlugs();
+  return [...all].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
 }
 
-export async function getProductById(id: string): Promise<Product | null> {
-  const { data, error } = await supabase
-    .from("products")
-    .select("*")
-    .eq("id", id)
-    .maybeSingle();
+export async function getProductsByCategory(category: Category): Promise<ProductWithSlug[]> {
+  const all = await fetchAllWithSlugs();
+  return all
+    .filter((p) => p.category === category)
+    .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+}
 
-  if (error) {
-    console.error("Failed to fetch product by id", error);
-    return null;
-  }
+export async function getProductById(id: string): Promise<ProductWithSlug | null> {
+  const all = await fetchAllWithSlugs();
+  return all.find((p) => p.id === id) || null;
+}
 
-  return data ? mapProduct(data) : null;
+export async function getProductBySlug(slug: string): Promise<ProductWithSlug | null> {
+  const all = await fetchAllWithSlugs();
+  return all.find((p) => p.slug === slug) || null;
 }

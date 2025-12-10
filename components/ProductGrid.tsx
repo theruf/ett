@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Product } from "@/lib/types";
+import { ProductWithSlug } from "@/lib/products";
 import ProductCard from "./ProductCard";
 
 /**
@@ -16,7 +16,7 @@ import ProductCard from "./ProductCard";
 type SortOrder = "default" | "priceDesc" | "priceAsc" | "newest" | "oldest";
 
 interface ProductGridProps {
-  products: Product[];
+  products: ProductWithSlug[];
 }
 
 export default function ProductGrid({ products }: ProductGridProps) {

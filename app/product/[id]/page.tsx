@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import ProductDetail from "@/components/ProductDetail";
-import { getProductById } from "@/lib/products";
+import { getProductById, getProductBySlug } from "@/lib/products";
 
 interface ProductPageProps {
   params: Promise<{
@@ -12,7 +12,7 @@ export const revalidate = 0;
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { id } = await params;
-  const product = await getProductById(id);
+  const product = /^\d+$/.test(id) ? await getProductBySlug(id) : await getProductById(id);
 
   if (!product) return notFound();
 

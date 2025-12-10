@@ -23,6 +23,7 @@ export type Category = "clothing" | "accessories" | "gadgets" | "apps";
 
 export interface Product {
   id: string;
+  slug?: string;
   created_at: string;
   title: string;
   category: Category;

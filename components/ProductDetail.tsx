@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import { useMemo, useRef, useState } from "react";
-import { Product } from "@/lib/types";
+import { ProductWithSlug } from "@/lib/products";
 
 interface ProductDetailProps {
-  product: Product;
+  product: ProductWithSlug;
 }
 
 export default function ProductDetail({ product }: ProductDetailProps) {
@@ -39,7 +39,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 items-start">
-      <div className="flex flex-col gap-3 order-2 lg:order-1 lg:sticky lg:top-20">
+      <div className="flex flex-col gap-4 order-2 lg:order-2">
         <div
           className="relative w-full bg-gray-lightest overflow-hidden"
           style={{ aspectRatio: "1 / 1" }}
@@ -81,7 +81,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
         )}
       </div>
 
-      <div className="flex flex-col gap-4 order-1 lg:order-2">
+      <div className="flex flex-col gap-4 order-1 lg:order-1 lg:sticky lg:top-20">
         <div className="flex flex-col gap-1">
           <p className="so-body text-gray-text capitalize">{product.category}</p>
           <h1 className="so-heading text-gray-dark flex-1">{product.title}</h1>

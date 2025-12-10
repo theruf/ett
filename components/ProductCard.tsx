@@ -2,16 +2,25 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Product } from "@/lib/types";
+import { useEffect, useState } from "react";
+import { ProductWithSlug } from "@/lib/products";
 
 interface ProductCardProps {
-  product: Product;
+  product: ProductWithSlug;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
+  const [hoverSwap, setHoverSwap] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.matchMedia("(hover: hover)").matches) {
+      setHoverSwap(true);
+    }
+  }, []);
+
   return (
     <Link
-      href={`/product/${product.id}`}
+      href={`/product/${product.slug}`}
       className="block bg-white overflow-hidden transition-opacity hover:opacity-70 animate-fade-up"
     >
       {/* Product image - portrait 3:4 ratio */}
@@ -24,11 +33,13 @@ export default function ProductCard({ product }: ProductCardProps) {
             src={product.images[0]}
             alt={product.title}
             fill
-            className="object-cover transition-opacity duration-300 ease-in-out hover:opacity-0"
+            className={`object-cover transition-opacity duration-300 ease-in-out ${
+              hoverSwap ? "hover:opacity-0" : ""
+            }`}
             sizes="(max-width: 1024px) 50vw, 25vw"
           />
         )}
-        {product.images.length > 1 && (
+        {hoverSwap && product.images.length > 1 && (
           <Image
             src={product.images[1]}
             alt={product.title}
