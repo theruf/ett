@@ -83,10 +83,10 @@ export default function ProductDetail({ product }: ProductDetailProps) {
       <div className="flex flex-col gap-4 order-2 lg:order-1">
         <div className="flex flex-col gap-1">
           <p className="so-body text-gray-text capitalize">{product.category}</p>
-          <div className="flex items-center flex-wrap gap-2">
-            <h1 className="so-heading text-gray-dark">{product.title}</h1>
+          <div className="flex items-end gap-2">
+            <h1 className="so-heading text-gray-dark flex-1">{product.title}</h1>
             {product.price !== null && (
-              <p className="so-body text-gray-dark">{`$${product.price}`}</p>
+              <p className="so-body text-gray-dark text-right self-end">{`$${product.price}`}</p>
             )}
           </div>
         </div>

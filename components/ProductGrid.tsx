@@ -60,9 +60,9 @@ export default function ProductGrid({ products }: ProductGridProps) {
 
   return (
     <>
-      <div className="flex items-center gap-4 mb-8">
+      <div className="flex items-center justify-between gap-4 mb-8">
         <select
-          className="so-body text-gray-dark bg-transparent outline-none px-0 py-0 border-none"
+          className="so-body text-gray-dark bg-transparent outline-none px-0 py-0 pr-2 border-none"
           value={sortOrder}
           onChange={(e) =>
             setSortOrder(e.target.value as SortOrder)
