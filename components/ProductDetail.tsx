@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { Product } from "@/types/product";
+import { Product } from "@/lib/types";
 
 interface ProductDetailProps {
   product: Product;
@@ -30,16 +30,18 @@ export default function ProductDetail({ product }: ProductDetailProps) {
         <div className="flex flex-col gap-1">
           <p className="so-body text-gray-text capitalize">{product.category}</p>
           <h1 className="so-heading text-gray-dark">{product.title}</h1>
-          <p className="so-body text-gray-dark">${product.price}</p>
+          <p className="so-body text-gray-dark">
+            {product.price !== null ? `$${product.price}` : ""}
+          </p>
         </div>
 
         <div className="border-t border-gray-light pt-6 flex flex-col gap-3">
           <h2 className="so-body text-gray-dark">Description</h2>
           <p className="so-body text-gray-text">
-            {product.longDescription || product.shortDescription}
+            {product.long_description || product.short_description}
           </p>
           <a
-            href={product.externalUrl}
+            href={product.external_url}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-2 w-full text-center bg-gray-dark text-white so-body py-3"

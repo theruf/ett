@@ -1,13 +1,13 @@
 import { notFound } from "next/navigation";
-import { getProductsByCategory } from "@/data/products";
-import { categoryFromSlug, categoryLabels, Category } from "@/types/product";
 import ProductGrid from "@/components/ProductGrid";
+import { getProductsByCategory } from "@/lib/products";
+import { categoryFromSlug, categoryLabels, Category } from "@/types/product";
 
 /**
  * Dynamic category page
  *
  * URL: /category/[category]
- * Examples: /category/clothing, /category/gadgets, /category/apps
+ * Examples: /category/clothing, /category/gadgets
  */
 
 interface CategoryPageProps {
@@ -28,6 +28,8 @@ export async function generateStaticParams() {
     category,
   }));
 }
+
+export const revalidate = 0;
 
 export async function generateMetadata({ params }: CategoryPageProps) {
   const { category: categorySlug } = await params;
@@ -55,7 +57,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     notFound();
   }
 
-  const products = getProductsByCategory(category);
+  const products = await getProductsByCategory(category);
   const categoryLabel = categoryLabels[category];
 
   return (

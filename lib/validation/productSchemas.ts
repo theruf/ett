@@ -1,18 +1,18 @@
 import { z } from "zod";
-import { Category } from "../products/types";
+import { Category } from "../types";
 
 export const productInputSchema = z.object({
   title: z.string().min(1),
   category: z.custom<Category>(),
-  price: z.number().optional(),
+  price: z.number().nullable().optional(),
   currency: z.string().optional().default("USD"),
-  shortDescription: z.string().optional(),
-  longDescription: z.string().optional(),
+  short_description: z.string().nullable().optional(),
+  long_description: z.string().nullable().optional(),
   images: z.array(z.string().url()).min(1),
-  externalUrl: z.string().url(),
-  sourceLabel: z.string().optional(),
-  isSponsored: z.boolean().optional(),
-  isAffiliate: z.boolean().optional(),
+  external_url: z.string().url(),
+  source_label: z.string().nullable().optional(),
+  is_sponsored: z.boolean().optional().default(false),
+  is_affiliate: z.boolean().optional().default(false),
 });
 
 export const productUpdateSchema = productInputSchema.partial();

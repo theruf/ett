@@ -1,5 +1,7 @@
-import { getLatestProducts } from "@/data/products";
 import ProductGrid from "@/components/ProductGrid";
+import { getAllProducts } from "@/lib/products";
+
+export const revalidate = 0;
 
 /**
  * ÉTT Market Homepage (still-object store/grid style)
@@ -10,8 +12,8 @@ import ProductGrid from "@/components/ProductGrid";
  * - White background
  */
 
-export default function HomePage() {
-  const latestProducts = getLatestProducts(24);
+export default async function HomePage() {
+  const latestProducts = await getAllProducts();
 
   return (
     <div className="w-full px-5 sm:px-8 md:px-10 py-8 md:py-12 lg:py-16">

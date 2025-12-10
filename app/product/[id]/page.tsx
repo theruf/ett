@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import ProductDetail from "@/components/ProductDetail";
-import { getAllProducts, getProductById } from "@/data/products";
+import { getProductById } from "@/lib/products";
 
 interface ProductPageProps {
   params: Promise<{
@@ -8,22 +8,18 @@ interface ProductPageProps {
   }>;
 }
 
-export async function generateStaticParams() {
-  return getAllProducts().map((product) => ({
-    id: product.id,
-  }));
-}
+export const revalidate = 0;
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { id } = await params;
-  const product = getProductById(id);
+  const product = await getProductById(id);
 
   if (!product) return notFound();
 
   return (
     <div className="w-full px-5 sm:px-8 md:px-10 py-8 md:py-12 lg:py-16">
       <div className="max-w-screen-2xl mx-auto">
-      <ProductDetail product={product} />
+        <ProductDetail product={product} />
       </div>
     </div>
   );

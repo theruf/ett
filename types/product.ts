@@ -1,38 +1,19 @@
-// Product category types
-export type Category =
-  | "clothing"
-  | "accessories"
-  | "gadgets"
-  | "apps";
+import type { Category } from "../lib/types";
+
+export type { Category, Product } from "../lib/types";
 
 // Category labels mapping
-export const categoryLabels: Record<Category, string> = {
+export const categoryLabels = {
   clothing: "Clothing",
   accessories: "Accessories",
   gadgets: "Gadgets",
   apps: "Apps",
-};
+} as const;
 
 // Get category from slug
-export const categoryFromSlug = (slug: string): Category | null => {
+export const categoryFromSlug = (slug: string) => {
   if (slug in categoryLabels) {
     return slug as Category;
   }
   return null;
 };
-
-// Product model
-export interface Product {
-  id: string;
-  title: string;
-  category: Category;
-  price: number;
-  shortDescription: string;
-  longDescription?: string;
-  images: string[];
-  externalUrl: string;
-  sourceLabel: string;
-  isSponsored?: boolean;
-  isAffiliate?: boolean;
-  createdAt?: Date;
-}

@@ -18,11 +18,13 @@ urldrop/
 │   ├── ProductCard.tsx                # Карточка товара
 │   └── ProductGrid.tsx                # Сетка карточек
 │
-├── data/                              # Данные приложения
-│   └── products.ts                    # Mock данные товаров
-│
 ├── types/                             # TypeScript типы
 │   └── product.ts                     # Типы Category и Product
+│
+├── lib/                               # Логика/утилиты
+│   ├── supabaseClient.ts              # Клиент Supabase
+│   ├── products.ts                    # Работа с продуктами через Supabase
+│   └── types.ts                       # Общие типы
 │
 ├── public/                            # Статические файлы (изображения)
 │
@@ -65,17 +67,13 @@ urldrop/
 | `ProductCard.tsx`          | Карточка товара (повторно используемый компонент)   |
 | `ProductGrid.tsx`          | Адаптивная сетка карточек                           |
 
-### Данные (data/)
+### Данные (Supabase)
 
-| Файл                       | Назначение                                          |
+| Файл/таблица               | Назначение                                          |
 | -------------------------- | --------------------------------------------------- |
-| `products.ts`              | Массив товаров (mock данные)                        |
-
-**Функции:**
-- `getAllProducts()` — получить все товары
-- `getProductsByCategory(category)` — товары по категории
-- `getLatestProducts(limit)` — последние добавленные
-- `getProductById(id)` — товар по ID
+| `lib/products.ts`          | Получение/поиск товаров из таблицы `products`       |
+| `lib/supabaseClient.ts`    | Инициализация Supabase клиента                      |
+| Таблица `products` в БД    | Хранение всех товаров                               |
 
 ### Типы (types/)
 
@@ -107,8 +105,8 @@ urldrop/
 ### Главная страница (/)
 
 ```
-data/products.ts (getLatestProducts)
-       ↓
+Supabase → lib/products.ts (getAllProducts)
+       ↓ 
 app/page.tsx (получает последние товары)
        ↓
 components/ProductGrid.tsx (отображает сетку)
@@ -123,7 +121,7 @@ URL параметр: "gadgets"
        ↓
 app/category/[category]/page.tsx (получает параметр)
        ↓
-data/products.ts (getProductsByCategory("gadgets"))
+Supabase → lib/products.ts (getProductsByCategory("gadgets"))
        ↓
 components/ProductGrid.tsx (отображает сетку)
        ↓
@@ -155,12 +153,12 @@ Utility-first подход к стилям:
 - Минимум кастомного CSS
 - Адаптивность через встроенные классы
 
-### 4. Статические данные
+### 4. Данные в Supabase
 
-Пока товары хранятся в `data/products.ts`:
-- Легко добавлять/редактировать
-- Нет зависимости от БД
-- В будущем можно заменить на API/БД
+Товары хранятся в таблице `products` в Supabase:
+- CRUD из админки `/admin`
+- Без деплоя для обновления данных
+- Можно расширять схему и права через Supabase
 
 ---
 
@@ -171,9 +169,6 @@ Utility-first подход к стилям:
 
 ### Хотите добавить новую страницу?
 → Создайте файл в `app/`
-
-### Хотите добавить товар?
-→ Редактируйте `data/products.ts`
 
 ### Хотите изменить типы?
 → Редактируйте `types/product.ts`

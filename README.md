@@ -94,55 +94,12 @@ urldrop/
 
 ## ➕ Как добавить новый товар
 
-### Шаг 1: Откройте файл с данными
+Товары теперь живут в Supabase (таблица `products`). Добавление делается через админку `/admin`:
 
-Откройте файл [data/products.ts](data/products.ts).
-
-### Шаг 2: Создайте объект товара
-
-Скопируйте один из существующих товаров и измените поля:
-
-```typescript
-{
-  id: "unique-id-001",                    // Уникальный ID товара
-  title: "Название товара",                // Название
-  category: "gadgets",                     // Категория (см. ниже)
-  shortDescription: "Короткое описание",   // 1-2 строки
-  longDescription: "Полное описание",      // Опционально
-  images: [
-    "https://example.com/image.jpg"       // Ссылка на изображение
-  ],
-  externalUrl: "https://ozon.ru/...",     // Ссылка на сайт продавца
-  sourceLabel: "Ozon",                     // Название источника
-  isSponsored: false,                      // true = "Sponsored" метка
-  isAffiliate: false,                      // true = реферальная ссылка
-  createdAt: new Date("2025-12-10"),      // Дата добавления
-}
-```
-
-### Шаг 3: Добавьте товар в массив
-
-Добавьте новый объект в массив `products`:
-
-```typescript
-export const products: Product[] = [
-  // ... существующие товары
-  {
-    id: "gd-004",
-    title: "Ваш новый товар",
-    category: "gadgets",
-    shortDescription: "Описание нового товара",
-    images: ["https://..."],
-    externalUrl: "https://...",
-    sourceLabel: "Amazon",
-    createdAt: new Date("2025-12-10"),
-  },
-];
-```
-
-### Готово!
-
-Товар автоматически появится на главной странице (в блоке "Последние добавленные") и на странице выбранной категории.
+1. Зайти на `/admin` и залогиниться паролем `ADMIN_PASSWORD` (см. `.env.local`).
+2. Нажать “Add product” или “Edit” в списке.
+3. Заполнить поля, указать ссылки на картинки (Supabase Storage или любой внешний CDN) и сохранить.
+4. Сразу после сохранения товар появляется на сайте — без деплоя.
 
 ---
 
@@ -353,14 +310,10 @@ import ProductGrid from "@/components/ProductGrid";
 
 ### Подключение базы данных
 
-Сейчас товары хранятся в статическом файле [data/products.ts](data/products.ts).
-
-В будущем можно подключить:
-
-- **Supabase** (PostgreSQL + real-time)
-- **Firebase Firestore**
-- **MongoDB Atlas**
-- **Prisma + PostgreSQL**
+Товары уже вынесены в Supabase (PostgreSQL) и подтягиваются на сайт без деплоя:
+- Таблица `products` хранит все товары
+- Админка `/admin` пишет/читает в Supabase
+- Данные доступны на проде сразу после сохранения
 
 ### Админка
 

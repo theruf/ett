@@ -1,22 +1,22 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Product, Category } from "@/lib/products/types";
+import { Product, Category } from "@/lib/types";
 
 type FormState = Partial<Product> & { images: string[] };
 
 const emptyForm: FormState = {
   title: "",
   category: "clothing",
-  price: undefined,
+  price: null,
   currency: "USD",
-  shortDescription: "",
-  longDescription: "",
+  short_description: "",
+  long_description: "",
   images: [""],
-  externalUrl: "",
-  sourceLabel: "",
-  isSponsored: false,
-  isAffiliate: false,
+  external_url: "",
+  source_label: "",
+  is_sponsored: false,
+  is_affiliate: false,
 };
 
 export default function AdminDashboard() {
@@ -31,6 +31,7 @@ export default function AdminDashboard() {
 
   const fetchProducts = async () => {
     setLoading(true);
+    setError(null);
     const params = new URLSearchParams();
     if (category !== "all") params.set("category", category);
     if (search) params.set("search", search);
@@ -40,7 +41,7 @@ export default function AdminDashboard() {
       setLoading(false);
       return;
     }
-    const data = await res.json();
+    const data: Product[] = await res.json();
     setProducts(data);
     setLoading(false);
   };
@@ -71,9 +72,24 @@ export default function AdminDashboard() {
     e.preventDefault();
     setMessage(null);
     setError(null);
+    const images = (form.images || []).filter(Boolean);
+    if (!images.length) {
+      setError("At least one image URL is required");
+      return;
+    }
+
     const payload = {
-      ...form,
-      price: form.price ? Number(form.price) : undefined,
+      title: form.title || "",
+      category: (form.category as Category) || "clothing",
+      price: form.price === null || form.price === undefined ? null : Number(form.price),
+      currency: form.currency || "USD",
+      short_description: form.short_description || null,
+      long_description: form.long_description || null,
+      images,
+      external_url: form.external_url || "",
+      source_label: form.source_label || null,
+      is_sponsored: !!form.is_sponsored,
+      is_affiliate: !!form.is_affiliate,
     };
     const isEdit = Boolean(editing?.id);
     const url = isEdit ? `/api/admin/products/${editing?.id}` : "/api/admin/products";
@@ -189,10 +205,11 @@ export default function AdminDashboard() {
                     <div className="flex-1">
                       <p className="so-body text-gray-dark">{p.title}</p>
                       <p className="so-meta text-gray-text">
-                        {p.category} • {p.currency || "USD"}{p.price ? ` ${p.price}` : ""} • {p.sourceLabel || ""}
+                        {p.category} • {p.currency || "USD"}
+                        {p.price !== null && p.price !== undefined ? ` ${p.price}` : ""} • {p.source_label || ""}
                       </p>
                       <p className="so-meta text-gray-text">
-                        {p.isSponsored ? "Sponsored" : ""} {p.isAffiliate ? "Affiliate" : ""}
+                        {p.is_sponsored ? "Sponsored" : ""} {p.is_affiliate ? "Affiliate" : ""}
                       </p>
                     </div>
                     <div className="flex items-center gap-2">
@@ -253,7 +270,9 @@ export default function AdminDashboard() {
                     type="number"
                     className="w-full border border-gray-light px-3 py-2 so-body"
                     value={form.price ?? ""}
-                    onChange={(e) => setForm({ ...form, price: e.target.value ? Number(e.target.value) : undefined })}
+                    onChange={(e) =>
+                      setForm({ ...form, price: e.target.value ? Number(e.target.value) : null })
+                    }
                     min={0}
                     step="0.01"
                   />
@@ -272,8 +291,8 @@ export default function AdminDashboard() {
                 <label className="so-body text-gray-dark mb-1 block">Short description</label>
                 <input
                   className="w-full border border-gray-light px-3 py-2 so-body"
-                  value={form.shortDescription || ""}
-                  onChange={(e) => setForm({ ...form, shortDescription: e.target.value })}
+                  value={form.short_description || ""}
+                  onChange={(e) => setForm({ ...form, short_description: e.target.value })}
                 />
               </div>
 
@@ -282,8 +301,8 @@ export default function AdminDashboard() {
                 <textarea
                   className="w-full border border-gray-light px-3 py-2 so-body"
                   rows={4}
-                  value={form.longDescription || ""}
-                  onChange={(e) => setForm({ ...form, longDescription: e.target.value })}
+                  value={form.long_description || ""}
+                  onChange={(e) => setForm({ ...form, long_description: e.target.value })}
                 />
               </div>
 
@@ -318,9 +337,18 @@ export default function AdminDashboard() {
                 <label className="so-body text-gray-dark mb-1 block">External URL *</label>
                 <input
                   className="w-full border border-gray-light px-3 py-2 so-body"
-                  value={form.externalUrl || ""}
-                  onChange={(e) => setForm({ ...form, externalUrl: e.target.value })}
+                  value={form.external_url || ""}
+                  onChange={(e) => setForm({ ...form, external_url: e.target.value })}
                   required
+                />
+              </div>
+
+              <div>
+                <label className="so-body text-gray-dark mb-1 block">Source label</label>
+                <input
+                  className="w-full border border-gray-light px-3 py-2 so-body"
+                  value={form.source_label || ""}
+                  onChange={(e) => setForm({ ...form, source_label: e.target.value })}
                 />
               </div>
 
@@ -328,16 +356,16 @@ export default function AdminDashboard() {
                 <label className="flex items-center gap-2 so-body text-gray-dark">
                   <input
                     type="checkbox"
-                    checked={form.isSponsored || false}
-                    onChange={(e) => setForm({ ...form, isSponsored: e.target.checked })}
+                    checked={form.is_sponsored || false}
+                    onChange={(e) => setForm({ ...form, is_sponsored: e.target.checked })}
                   />
                   Sponsored
                 </label>
                 <label className="flex items-center gap-2 so-body text-gray-dark">
                   <input
                     type="checkbox"
-                    checked={form.isAffiliate || false}
-                    onChange={(e) => setForm({ ...form, isAffiliate: e.target.checked })}
+                    checked={form.is_affiliate || false}
+                    onChange={(e) => setForm({ ...form, is_affiliate: e.target.checked })}
                   />
                   Affiliate
                 </label>

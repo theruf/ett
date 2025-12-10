@@ -34,15 +34,26 @@
 :root {
   --so-letter-spacing: -0.04em;
   --so-line-height: 1.2;
-  --so-heading-desktop: 30px;
-  --so-heading-tablet: 24px;
-  --so-heading-mobile: 20px;
-  --so-body-desktop: 14px;
-  --so-body-tablet: 14px;
-  --so-body-mobile: 14px;
-  --so-meta-desktop: 12px;
-  --so-meta-tablet: 12px;
-  --so-meta-mobile: 12px;
+  --so-heading-desktop: 28px;
+  --so-heading-tablet: 22px;
+  --so-heading-mobile: 18px;
+  --so-body-desktop: 12px;
+  --so-body-tablet: 12px;
+  --so-body-mobile: 12px;
+  --so-meta-desktop: 10px;
+  --so-meta-tablet: 10px;
+  --so-meta-mobile: 10px;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @layer base {
@@ -144,24 +155,28 @@
     font-weight: 400;
     letter-spacing: var(--so-letter-spacing);
     line-height: var(--so-line-height);
-    font-size: 14px;
+    font-size: 12px;
   }
 
   @media (min-width: 810px) {
     .so-nav {
-      font-size: 14px;
+      font-size: 12px;
     }
   }
 
   @media (min-width: 1200px) {
     .so-nav {
-      font-size: 14px;
+      font-size: 12px;
     }
   }
 }
 
 /* Text utilities */
 @layer utilities {
+  .animate-fade-up {
+    animation: fade-up 320ms ease forwards;
+  }
+
   .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
