@@ -39,7 +39,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 items-start">
-      <div className="flex flex-col gap-3 order-1">
+      <div className="flex flex-col gap-3 order-2 lg:order-1 lg:sticky lg:top-20">
         <div
           className="relative w-full bg-gray-lightest overflow-hidden"
           style={{ aspectRatio: "1 / 1" }}
@@ -81,20 +81,16 @@ export default function ProductDetail({ product }: ProductDetailProps) {
         )}
       </div>
 
-      <div className="flex flex-col gap-4 order-2 lg:order-1">
+      <div className="flex flex-col gap-4 order-1 lg:order-2">
         <div className="flex flex-col gap-1">
           <p className="so-body text-gray-text capitalize">{product.category}</p>
-          <div className="flex items-end gap-2">
-            <h1 className="so-heading text-gray-dark flex-1">{product.title}</h1>
-            {product.price !== null && (
-              <p className="so-heading font-normal text-gray-dark text-right leading-tight self-end">
-                {`$${product.price}`}
-              </p>
-            )}
-          </div>
+          <h1 className="so-heading text-gray-dark flex-1">{product.title}</h1>
+          {product.price !== null && (
+            <p className="so-body text-gray-dark">{`$${product.price}`}</p>
+          )}
         </div>
 
-        <div className="border-t border-gray-light pt-6 flex flex-col gap-3 lg:sticky lg:top-24">
+        <div className="border-t border-gray-light pt-6 flex flex-col gap-3">
           <h2 className="so-body text-gray-dark">Description</h2>
           <p className="so-body text-gray-text">
             {product.long_description || product.short_description}
