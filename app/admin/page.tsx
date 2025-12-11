@@ -130,6 +130,18 @@ export default function AdminDashboard() {
     });
   };
 
+  const moveImage = (from: number, to: number) => {
+    setForm((prev) => {
+      const images = [...(prev.images || [])];
+      if (to < 0 || to >= images.length) return prev;
+      const [item] = images.splice(from, 1);
+      images.splice(to, 0, item);
+      return { ...prev, images };
+    });
+  };
+
+  const isVideo = (src: string) => /\.mp4(\?|$)/i.test(src);
+
   const handleLogout = async () => {
     await fetch("/api/admin/login", { method: "DELETE" });
     window.location.href = "/admin/login";
@@ -315,6 +327,23 @@ export default function AdminDashboard() {
                 </div>
                 {(form.images || []).map((img, idx) => (
                   <div key={idx} className="flex items-center gap-2">
+                    <div className="relative w-12 h-12 bg-gray-lightest border border-gray-light overflow-hidden">
+                      {img ? (
+                        isVideo(img) ? (
+                          <video
+                            src={img}
+                            className="absolute inset-0 h-full w-full object-cover"
+                            muted
+                            loop
+                            autoPlay
+                            playsInline
+                          />
+                        ) : (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src={img} alt={`preview-${idx}`} className="absolute inset-0 h-full w-full object-cover" />
+                        )
+                      ) : null}
+                    </div>
                     <input
                       className="w-full border border-gray-light px-3 py-2 so-body"
                       value={img}
@@ -322,6 +351,24 @@ export default function AdminDashboard() {
                       required={idx === 0}
                       placeholder="https://..."
                     />
+                    <div className="flex items-center gap-1">
+                      <button
+                        type="button"
+                        className="so-meta text-gray-text border border-gray-light px-2 py-1"
+                        onClick={() => moveImage(idx, idx - 1)}
+                        disabled={idx === 0}
+                      >
+                        ↑
+                      </button>
+                      <button
+                        type="button"
+                        className="so-meta text-gray-text border border-gray-light px-2 py-1"
+                        onClick={() => moveImage(idx, idx + 1)}
+                        disabled={idx === (form.images?.length || 1) - 1}
+                      >
+                        ↓
+                      </button>
+                    </div>
                     <button
                       type="button"
                       className="so-meta text-gray-text border border-gray-light px-2 py-1"
