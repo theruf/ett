@@ -13,6 +13,10 @@ const currencySymbol = (code?: string) => {
   return map[upper] || code;
 };
 
+const formatPrice = (price: number) => {
+  return new Intl.NumberFormat("en-US").format(price);
+};
+
 interface ProductCardProps {
   product: ProductWithSlug;
 }
@@ -79,7 +83,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             {product.title}
           </h3>
           <p className="so-body text-gray-text shrink-0">
-            {product.price !== null ? `${currencySymbol(product.currency)}${product.price}` : ""}
+            {product.price !== null ? `${currencySymbol(product.currency)}${formatPrice(product.price)}` : ""}
           </p>
         </div>
         <p

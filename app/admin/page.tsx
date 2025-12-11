@@ -4,13 +4,17 @@ import { useEffect, useMemo, useState } from "react";
 import { Product, Category } from "@/lib/types";
 import { categoryLabels } from "@/types/product";
 
-type FormState = Partial<Product> & { images: string[] };
+type FormState = Partial<Product> & { images: string[]; priceText?: string };
 
 const currencySymbol = (code?: string) => {
   const map: Record<string, string> = { RUB: "₽", USD: "$", EUR: "€" };
   if (!code) return map.RUB;
   const upper = code.toUpperCase();
   return map[upper] || code;
+};
+
+const formatPrice = (price: number) => {
+  return new Intl.NumberFormat("en-US").format(price);
 };
 
 const emptyForm: FormState = {
@@ -25,6 +29,7 @@ const emptyForm: FormState = {
   source_label: "",
   is_sponsored: false,
   is_affiliate: false,
+  priceText: "",
 };
 
 export default function AdminDashboard() {
@@ -86,11 +91,23 @@ export default function AdminDashboard() {
       return;
     }
 
+    const rawPrice = form.priceText ?? "";
+    const cleanedPrice = rawPrice.trim();
+    let priceNumber: number | null = null;
+    if (cleanedPrice) {
+      const numericString = cleanedPrice.replace(/[^\d.]/g, "");
+      priceNumber = numericString ? Number.parseFloat(numericString) : null;
+      if (numericString && Number.isNaN(priceNumber)) {
+        setError("Проверьте формат цены");
+        return;
+      }
+    }
+
     const payload = {
       title: form.title || "",
       category: (form.category as Category) || "clothing",
-      price: form.price === null || form.price === undefined ? null : Number(form.price),
-      currency: form.currency || "USD",
+      price: priceNumber,
+      currency: form.currency || "RUB",
       short_description: form.short_description || null,
       long_description: form.long_description || null,
       images,
@@ -226,7 +243,7 @@ export default function AdminDashboard() {
                       <p className="so-body text-gray-dark">{p.title}</p>
                       <p className="so-meta text-gray-text">
                         {categoryLabels[p.category as Category]} • {currencySymbol(p.currency)}
-                        {p.price !== null && p.price !== undefined ? ` ${p.price}` : ""} • {p.source_label || ""}
+                        {p.price !== null && p.price !== undefined ? ` ${formatPrice(p.price)}` : ""} • {p.source_label || ""}
                       </p>
                       <p className="so-meta text-gray-text">
                         {p.is_sponsored ? "Реклама" : ""} {p.is_affiliate ? "Партнерский товар" : ""}
@@ -287,27 +304,23 @@ export default function AdminDashboard() {
                 <div className="flex-1 min-w-[120px]">
                   <label className="so-body text-gray-dark mb-1 block">Цена</label>
                   <input
-                    type="number"
+                    type="text"
                     className="w-full border border-gray-light px-3 py-2 so-body"
-                    value={form.price ?? ""}
+                    value={form.priceText ?? ""}
                     onChange={(e) =>
-                      setForm({ ...form, price: e.target.value ? Number(e.target.value) : null })
+                      setForm({ ...form, priceText: e.target.value })
                     }
-                    min={0}
-                    step="0.01"
+                    placeholder="15,800"
                   />
                 </div>
                 <div className="w-28">
                   <label className="so-body text-gray-dark mb-1 block">Валюта</label>
-                  <select
+                  <input
                     className="w-full border border-gray-light px-3 py-2 so-body"
-                    value={form.currency || "RUB"}
+                    value={form.currency || ""}
                     onChange={(e) => setForm({ ...form, currency: e.target.value })}
-                  >
-                    <option value="RUB">RUB (₽)</option>
-                    <option value="USD">USD ($)</option>
-                    <option value="EUR">EUR (€)</option>
-                  </select>
+                    placeholder="RUB"
+                  />
                 </div>
               </div>
 

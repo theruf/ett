@@ -16,6 +16,10 @@ const currencySymbol = (code?: string) => {
   return map[upper] || code;
 };
 
+const formatPrice = (price: number) => {
+  return new Intl.NumberFormat("en-US").format(price);
+};
+
 export default function ProductDetail({ product }: ProductDetailProps) {
   const [index, setIndex] = useState(0);
   const touchStartX = useRef<number | null>(null);
@@ -122,7 +126,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
           </p>
           <h1 className="so-heading text-gray-dark flex-1">{product.title}</h1>
           {product.price !== null && (
-            <p className="so-body text-gray-dark">{`${currencySymbol(product.currency)}${product.price}`}</p>
+            <p className="so-body text-gray-dark">{`${currencySymbol(product.currency)}${formatPrice(product.price)}`}</p>
           )}
         </div>
 
