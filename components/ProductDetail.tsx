@@ -10,7 +10,8 @@ interface ProductDetailProps {
 
 const isVideo = (src: string) => /\.mp4(\?|$)/i.test(src);
 const formatPrice = (price: number) => {
-  return new Intl.NumberFormat("en-US").format(price);
+  // Разделяем тысячи пробелами
+  return new Intl.NumberFormat("en-US").format(price).replace(/,/g, " ");
 };
 
 export default function ProductDetail({ product }: ProductDetailProps) {

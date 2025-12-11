@@ -7,7 +7,8 @@ import { ProductWithSlug } from "@/lib/products";
 
 const isVideo = (src: string) => /\.mp4(\?|$)/i.test(src);
 const formatPrice = (price: number) => {
-  return new Intl.NumberFormat("en-US").format(price);
+  // Разделяем тысячи пробелами, отображая так же, как вводит пользователь
+  return new Intl.NumberFormat("en-US").format(price).replace(/,/g, " ");
 };
 
 interface ProductCardProps {

@@ -7,7 +7,8 @@ import { categoryLabels } from "@/types/product";
 type FormState = Partial<Product> & { images: string[]; priceText?: string };
 
 const formatPrice = (price: number) => {
-  return new Intl.NumberFormat("en-US").format(price);
+  // Разделяем тысячи пробелами, чтобы отображение совпадало с привычным вводом
+  return new Intl.NumberFormat("en-US").format(price).replace(/,/g, " ");
 };
 
 const emptyForm: FormState = {
