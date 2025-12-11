@@ -4,7 +4,7 @@
  */
 "use client";
 
-import { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -18,11 +18,45 @@ declare global {
   }
 }
 
+const MiniAppShell: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [topInset, setTopInset] = useState(16);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const tg = (window as any).Telegram?.WebApp;
+    const safeTop = tg?.safeAreaInsets?.top;
+    if (typeof safeTop === "number" && safeTop > 0) {
+      setTopInset(safeTop);
+    } else {
+      setTopInset(32);
+    }
+  }, []);
+
+  return (
+    <div
+      style={{
+        backgroundColor: "#ffffff",
+        minHeight: "100vh",
+      }}
+    >
+      <div style={{ height: topInset }} />
+      {children}
+    </div>
+  );
+};
+
 export default function MiniLayout({ children }: MiniLayoutProps) {
   const isTelegram = useMemo(
     () => typeof window !== "undefined" && Boolean(window.Telegram?.WebApp),
     []
   );
+
+  useEffect(() => {
+    document.body.classList.add("mini-app-hide-root");
+    return () => {
+      document.body.classList.remove("mini-app-hide-root");
+    };
+  }, []);
 
   useEffect(() => {
     if (!isTelegram) return;
@@ -34,15 +68,18 @@ export default function MiniLayout({ children }: MiniLayoutProps) {
   }, [isTelegram]);
 
   return (
-    <div
-      className="min-h-screen flex flex-col bg-white antialiased"
-      style={{
-        paddingTop: isTelegram ? "env(safe-area-inset-top, 20px)" : undefined,
-      }}
-    >
-      <Header />
-      <main className="flex-grow">{children}</main>
-      <Footer />
-    </div>
+    <>
+      <MiniAppShell>
+        <Header />
+        <main className="flex-grow">{children}</main>
+        <Footer />
+      </MiniAppShell>
+      <style jsx global>{`
+        body.mini-app-hide-root > div > header,
+        body.mini-app-hide-root > div > footer {
+          display: none;
+        }
+      `}</style>
+    </>
   );
 }
