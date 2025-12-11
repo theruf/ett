@@ -6,13 +6,13 @@ export default function Footer() {
           <div className="border-t border-gray-light pt-4 flex flex-wrap items-center justify-between gap-3">
             <p className="so-nav text-gray-dark">©2025 ÉTT Market. All rights reserved.</p>
             <div className="flex items-center gap-4">
-              <a href="https://t.me" target="_blank" rel="noopener" className="so-body text-gray-dark hover:text-gray-text">
+              <a href="https://t.me/ettmarket" target="_blank" rel="noopener" className="so-body text-gray-dark hover:text-gray-text">
                 Telegram
               </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener" className="so-body text-gray-dark hover:text-gray-text">
+              <a href="https://www.instagram.com/ettmarket" target="_blank" rel="noopener" className="so-body text-gray-dark hover:text-gray-text">
                 Instagram
               </a>
-              <a href="https://pinterest.com" target="_blank" rel="noopener" className="so-body text-gray-dark hover:text-gray-text">
+              <a href="https://ru.pinterest.com/ettmarket" target="_blank" rel="noopener" className="so-body text-gray-dark hover:text-gray-text">
                 Pinterest
               </a>
             </div>
