@@ -34,7 +34,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             alt={product.title}
             fill
             className={`object-cover transition-opacity duration-300 ease-in-out ${
-              hoverSwap ? "hover:opacity-0" : ""
+              hoverSwap && product.images.length > 1 ? "hover:opacity-0" : ""
             }`}
             sizes="(max-width: 1024px) 50vw, 25vw"
           />
