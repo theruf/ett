@@ -88,9 +88,20 @@ export default function AdminDashboard() {
     const cleanedPrice = rawPrice.trim();
     let priceNumber: number | null = null;
     if (cleanedPrice) {
-      const numericString = cleanedPrice.replace(/[^\d.]/g, "");
-      priceNumber = numericString ? Number.parseFloat(numericString) : null;
-      if (numericString && Number.isNaN(priceNumber)) {
+      const noSpaces = cleanedPrice.replace(/\s+/g, "");
+      const hasComma = noSpaces.includes(",");
+      const hasDot = noSpaces.includes(".");
+      let normalized = noSpaces;
+      if (hasComma && !hasDot) {
+        // трактуем запятые как разделители тысяч
+        normalized = normalized.replace(/,/g, "");
+      } else {
+        // переводим запятые в точки для дробной части
+        normalized = normalized.replace(/,/g, ".");
+      }
+      normalized = normalized.replace(/[^\d.]/g, "");
+      priceNumber = normalized ? Number.parseFloat(normalized) : null;
+      if (normalized && Number.isNaN(priceNumber)) {
         setError("Проверьте формат цены");
         return;
       }
@@ -304,7 +315,7 @@ export default function AdminDashboard() {
                     onChange={(e) =>
                       setForm({ ...form, priceText: e.target.value })
                     }
-                    placeholder="15,800"
+                    placeholder="Цена"
                   />
                 </div>
                 <div className="w-28">
