@@ -20,16 +20,14 @@ declare global {
 }
 
 const MiniAppShell: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [topInset, setTopInset] = useState(40);
+  const [topInset, setTopInset] = useState(80);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
     const tg = (window as any).Telegram?.WebApp;
     const safeTop = tg?.safeAreaInsets?.top;
-    if (typeof safeTop === "number" && safeTop > 0) {
-      setTopInset(safeTop + 16);
-    } else {
-      setTopInset(48);
+    if (typeof safeTop === "number" && safeTop >= 0) {
+      setTopInset(safeTop + 32);
     }
   }, []);
 
@@ -70,10 +68,13 @@ export default function MiniLayout({ children }: MiniLayoutProps) {
     if (typeof webApp.requestFullscreen === "function") {
       webApp.requestFullscreen();
     }
+    webApp.BackButton?.hide?.();
   }, [isTelegram]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    const isMini = window.location.pathname.startsWith("/mini");
+    if (!isMini) return;
     const preventGesture = (e: Event) => {
       e.preventDefault();
     };
