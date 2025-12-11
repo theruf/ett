@@ -116,7 +116,9 @@ export default function ProductDetail({ product }: ProductDetailProps) {
           <h1 className="so-heading text-gray-dark flex-1">{product.title}</h1>
           {product.price !== null && (
             <p className="so-body text-gray-dark">
-              {`${product.price}${product.currency ? ` ${product.currency}` : ""}`}
+              {`${new Intl.NumberFormat("en-US").format(product.price).replace(/,/g, " ")}${
+                product.currency ? ` ${product.currency}` : ""
+              }`}
             </p>
           )}
         </div>

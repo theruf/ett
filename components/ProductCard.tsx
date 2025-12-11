@@ -73,7 +73,9 @@ export default function ProductCard({ product }: ProductCardProps) {
           </h3>
           <p className="so-body text-gray-text shrink-0">
             {product.price !== null
-              ? `${product.price}${product.currency ? ` ${product.currency}` : ""}`
+              ? `${new Intl.NumberFormat("en-US").format(product.price).replace(/,/g, " ")}${
+                  product.currency ? ` ${product.currency}` : ""
+                }`
               : ""}
           </p>
         </div>
