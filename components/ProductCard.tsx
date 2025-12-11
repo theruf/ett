@@ -6,11 +6,6 @@ import { useEffect, useState } from "react";
 import { ProductWithSlug } from "@/lib/products";
 
 const isVideo = (src: string) => /\.mp4(\?|$)/i.test(src);
-const formatPrice = (price: number) => {
-  // Разделяем тысячи пробелами, отображая так же, как вводит пользователь
-  return new Intl.NumberFormat("en-US").format(price).replace(/,/g, " ");
-};
-
 interface ProductCardProps {
   product: ProductWithSlug;
 }
@@ -78,7 +73,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           </h3>
           <p className="so-body text-gray-text shrink-0">
             {product.price !== null
-              ? `${formatPrice(product.price)}${product.currency ? ` ${product.currency}` : ""}`
+              ? `${product.price}${product.currency ? ` ${product.currency}` : ""}`
               : ""}
           </p>
         </div>

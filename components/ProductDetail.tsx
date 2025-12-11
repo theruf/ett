@@ -9,11 +9,6 @@ interface ProductDetailProps {
 }
 
 const isVideo = (src: string) => /\.mp4(\?|$)/i.test(src);
-const formatPrice = (price: number) => {
-  // Разделяем тысячи пробелами
-  return new Intl.NumberFormat("en-US").format(price).replace(/,/g, " ");
-};
-
 export default function ProductDetail({ product }: ProductDetailProps) {
   const [index, setIndex] = useState(0);
   const touchStartX = useRef<number | null>(null);
@@ -121,7 +116,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
           <h1 className="so-heading text-gray-dark flex-1">{product.title}</h1>
           {product.price !== null && (
             <p className="so-body text-gray-dark">
-              {`${formatPrice(product.price)}${product.currency ? ` ${product.currency}` : ""}`}
+              {`${product.price}${product.currency ? ` ${product.currency}` : ""}`}
             </p>
           )}
         </div>

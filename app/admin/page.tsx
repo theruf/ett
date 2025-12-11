@@ -6,11 +6,6 @@ import { categoryLabels } from "@/types/product";
 
 type FormState = Partial<Product> & { images: string[]; priceText?: string };
 
-const formatPrice = (price: number) => {
-  // Разделяем тысячи пробелами, чтобы отображение совпадало с привычным вводом
-  return new Intl.NumberFormat("en-US").format(price).replace(/,/g, " ");
-};
-
 const emptyForm: FormState = {
   title: "",
   category: "clothing",
@@ -248,7 +243,7 @@ export default function AdminDashboard() {
                       <p className="so-body text-gray-dark">{p.title}</p>
                       <p className="so-meta text-gray-text">
                         {categoryLabels[p.category as Category]} •
-                        {p.price !== null && p.price !== undefined ? ` ${formatPrice(p.price)}` : ""} {p.currency || ""}
+                        {p.price !== null && p.price !== undefined ? ` ${p.price}` : ""} {p.currency || ""}
                         {p.source_label ? ` • ${p.source_label}` : ""}
                       </p>
                       <p className="so-meta text-gray-text">
