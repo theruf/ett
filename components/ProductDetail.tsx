@@ -9,13 +9,6 @@ interface ProductDetailProps {
 }
 
 const isVideo = (src: string) => /\.mp4(\?|$)/i.test(src);
-const currencySymbol = (code?: string) => {
-  const map: Record<string, string> = { RUB: "₽", USD: "$", EUR: "€" };
-  if (!code) return map.RUB;
-  const upper = code.toUpperCase();
-  return map[upper] || code;
-};
-
 const formatPrice = (price: number) => {
   return new Intl.NumberFormat("en-US").format(price);
 };
@@ -126,7 +119,9 @@ export default function ProductDetail({ product }: ProductDetailProps) {
           </p>
           <h1 className="so-heading text-gray-dark flex-1">{product.title}</h1>
           {product.price !== null && (
-            <p className="so-body text-gray-dark">{`${currencySymbol(product.currency)}${formatPrice(product.price)}`}</p>
+            <p className="so-body text-gray-dark">
+              {`${formatPrice(product.price)}${product.currency ? ` ${product.currency}` : ""}`}
+            </p>
           )}
         </div>
 

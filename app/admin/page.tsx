@@ -6,13 +6,6 @@ import { categoryLabels } from "@/types/product";
 
 type FormState = Partial<Product> & { images: string[]; priceText?: string };
 
-const currencySymbol = (code?: string) => {
-  const map: Record<string, string> = { RUB: "₽", USD: "$", EUR: "€" };
-  if (!code) return map.RUB;
-  const upper = code.toUpperCase();
-  return map[upper] || code;
-};
-
 const formatPrice = (price: number) => {
   return new Intl.NumberFormat("en-US").format(price);
 };
@@ -107,7 +100,7 @@ export default function AdminDashboard() {
       title: form.title || "",
       category: (form.category as Category) || "clothing",
       price: priceNumber,
-      currency: form.currency || "RUB",
+      currency: (form.currency || "RUB").trim(),
       short_description: form.short_description || null,
       long_description: form.long_description || null,
       images,
@@ -242,8 +235,9 @@ export default function AdminDashboard() {
                     <div className="flex-1">
                       <p className="so-body text-gray-dark">{p.title}</p>
                       <p className="so-meta text-gray-text">
-                        {categoryLabels[p.category as Category]} • {currencySymbol(p.currency)}
-                        {p.price !== null && p.price !== undefined ? ` ${formatPrice(p.price)}` : ""} • {p.source_label || ""}
+                        {categoryLabels[p.category as Category]} •
+                        {p.price !== null && p.price !== undefined ? ` ${formatPrice(p.price)}` : ""} {p.currency || ""}
+                        {p.source_label ? ` • ${p.source_label}` : ""}
                       </p>
                       <p className="so-meta text-gray-text">
                         {p.is_sponsored ? "Реклама" : ""} {p.is_affiliate ? "Партнерский товар" : ""}
