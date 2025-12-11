@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ProductWithSlug } from "@/lib/products";
 
+const isVideo = (src: string) => /\.mp4(\?|$)/i.test(src);
+
 interface ProductCardProps {
   product: ProductWithSlug;
 }
@@ -29,25 +31,39 @@ export default function ProductCard({ product }: ProductCardProps) {
         style={{ aspectRatio: "1 / 1" }}
       >
         {product.images.length > 0 && (
-          <Image
-            src={product.images[0]}
-            alt={product.title}
-            fill
-            className={`object-cover transition-opacity duration-300 ease-in-out ${
-              hoverSwap && product.images.length > 1 ? "hover:opacity-0" : ""
-            }`}
-            sizes="(max-width: 1024px) 50vw, 25vw"
-          />
+          isVideo(product.images[0]) ? (
+            <video
+              src={product.images[0]}
+              className="absolute inset-0 h-full w-full object-cover"
+              autoPlay
+              loop
+              muted
+              playsInline
+            />
+          ) : (
+            <Image
+              src={product.images[0]}
+              alt={product.title}
+              fill
+              className={`object-cover transition-opacity duration-300 ease-in-out ${
+                hoverSwap && product.images.length > 1 && !isVideo(product.images[1]) ? "hover:opacity-0" : ""
+              }`}
+              sizes="(max-width: 1024px) 50vw, 25vw"
+            />
+          )
         )}
-        {hoverSwap && product.images.length > 1 && (
-          <Image
-            src={product.images[1]}
-            alt={product.title}
-            fill
-            className="object-cover opacity-0 transition-opacity duration-300 ease-in-out hover:opacity-100"
-            sizes="(max-width: 1024px) 50vw, 25vw"
-          />
-        )}
+        {hoverSwap &&
+          product.images.length > 1 &&
+          !isVideo(product.images[0]) &&
+          !isVideo(product.images[1]) && (
+            <Image
+              src={product.images[1]}
+              alt={product.title}
+              fill
+              className="object-cover opacity-0 transition-opacity duration-300 ease-in-out hover:opacity-100"
+              sizes="(max-width: 1024px) 50vw, 25vw"
+            />
+          )}
       </div>
 
       {/* Card content */}

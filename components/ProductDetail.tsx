@@ -8,6 +8,8 @@ interface ProductDetailProps {
   product: ProductWithSlug;
 }
 
+const isVideo = (src: string) => /\.mp4(\?|$)/i.test(src);
+
 export default function ProductDetail({ product }: ProductDetailProps) {
   const [index, setIndex] = useState(0);
   const touchStartX = useRef<number | null>(null);
@@ -47,15 +49,26 @@ export default function ProductDetail({ product }: ProductDetailProps) {
           onTouchEnd={handleTouchEnd}
           onClick={next}
         >
-          {images.length > 0 && (
-            <Image
-              src={mainImage}
-              alt={product.title}
-              fill
-              className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-            />
-          )}
+          {images.length > 0 &&
+            (isVideo(mainImage) ? (
+              <video
+                key={mainImage}
+                src={mainImage}
+                className="absolute inset-0 h-full w-full object-cover"
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
+            ) : (
+              <Image
+                src={mainImage}
+                alt={product.title}
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+            ))}
         </div>
 
         {images.length > 1 && (
@@ -68,13 +81,25 @@ export default function ProductDetail({ product }: ProductDetailProps) {
                 onClick={() => setIndex(i)}
                 aria-label={`Select image ${i + 1}`}
               >
-                <Image
-                  src={img}
-                  alt={`${product.title} thumbnail ${i + 1}`}
-                  fill
-                  className="object-cover"
-                  sizes="64px"
-                />
+                {isVideo(img) ? (
+                  <video
+                    key={img}
+                    src={img}
+                    className="absolute inset-0 h-full w-full object-cover"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                  />
+                ) : (
+                  <Image
+                    src={img}
+                    alt={`${product.title} thumbnail ${i + 1}`}
+                    fill
+                    className="object-cover"
+                    sizes="64px"
+                  />
+                )}
               </button>
             ))}
           </div>
