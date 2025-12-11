@@ -22,7 +22,6 @@ export async function generateStaticParams() {
     "accessories",
     "gadgets",
     "home",
-    "apps",
   ];
 
   return categories.map((category) => ({

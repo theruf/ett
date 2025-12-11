@@ -9,6 +9,12 @@ interface ProductDetailProps {
 }
 
 const isVideo = (src: string) => /\.mp4(\?|$)/i.test(src);
+const currencySymbol = (code?: string) => {
+  const map: Record<string, string> = { RUB: "₽", USD: "$", EUR: "€" };
+  if (!code) return map.RUB;
+  const upper = code.toUpperCase();
+  return map[upper] || code;
+};
 
 export default function ProductDetail({ product }: ProductDetailProps) {
   const [index, setIndex] = useState(0);
@@ -113,11 +119,10 @@ export default function ProductDetail({ product }: ProductDetailProps) {
             {product.category === "accessories" && "Аксессуары"}
             {product.category === "gadgets" && "Гаджеты"}
             {product.category === "home" && "Дом"}
-            {product.category === "apps" && "Приложения"}
           </p>
           <h1 className="so-heading text-gray-dark flex-1">{product.title}</h1>
           {product.price !== null && (
-            <p className="so-body text-gray-dark">{`$${product.price}`}</p>
+            <p className="so-body text-gray-dark">{`${currencySymbol(product.currency)}${product.price}`}</p>
           )}
         </div>
 

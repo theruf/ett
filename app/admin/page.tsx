@@ -6,11 +6,18 @@ import { categoryLabels } from "@/types/product";
 
 type FormState = Partial<Product> & { images: string[] };
 
+const currencySymbol = (code?: string) => {
+  const map: Record<string, string> = { RUB: "₽", USD: "$", EUR: "€" };
+  if (!code) return map.RUB;
+  const upper = code.toUpperCase();
+  return map[upper] || code;
+};
+
 const emptyForm: FormState = {
   title: "",
   category: "clothing",
   price: null,
-  currency: "USD",
+  currency: "RUB",
   short_description: "",
   long_description: "",
   images: [""],
@@ -179,7 +186,6 @@ export default function AdminDashboard() {
                   <option value="accessories">Аксессуары</option>
                   <option value="gadgets">Гаджеты</option>
                   <option value="home">Дом</option>
-                  <option value="apps">Приложения</option>
                 </select>
                 <input
                   className="border border-gray-light px-3 py-2 so-body"
@@ -219,7 +225,7 @@ export default function AdminDashboard() {
                     <div className="flex-1">
                       <p className="so-body text-gray-dark">{p.title}</p>
                       <p className="so-meta text-gray-text">
-                        {categoryLabels[p.category as Category]} • {p.currency || "USD"}
+                        {categoryLabels[p.category as Category]} • {currencySymbol(p.currency)}
                         {p.price !== null && p.price !== undefined ? ` ${p.price}` : ""} • {p.source_label || ""}
                       </p>
                       <p className="so-meta text-gray-text">
@@ -267,16 +273,15 @@ export default function AdminDashboard() {
               <div className="flex flex-wrap gap-3">
                 <div className="flex-1 min-w-[160px]">
                   <label className="so-body text-gray-dark mb-1 block">Категория</label>
-                  <select
-                    className="w-full border border-gray-light px-3 py-2 so-body"
-                    value={form.category}
-                    onChange={(e) => setForm({ ...form, category: e.target.value as Category })}
-                  >
-                    <option value="clothing">Одежда</option>
-                  <option value="accessories">Аксессуары</option>
-                  <option value="gadgets">Гаджеты</option>
-                  <option value="home">Дом</option>
-                  <option value="apps">Приложения</option>
+                <select
+                  className="w-full border border-gray-light px-3 py-2 so-body"
+                  value={form.category}
+                  onChange={(e) => setForm({ ...form, category: e.target.value as Category })}
+                >
+                  <option value="clothing">Одежда</option>
+                <option value="accessories">Аксессуары</option>
+                <option value="gadgets">Гаджеты</option>
+                <option value="home">Дом</option>
                 </select>
                 </div>
                 <div className="flex-1 min-w-[120px]">
@@ -292,13 +297,17 @@ export default function AdminDashboard() {
                     step="0.01"
                   />
                 </div>
-                <div className="w-24">
+                <div className="w-28">
                   <label className="so-body text-gray-dark mb-1 block">Валюта</label>
-                  <input
+                  <select
                     className="w-full border border-gray-light px-3 py-2 so-body"
-                    value={form.currency || "USD"}
+                    value={form.currency || "RUB"}
                     onChange={(e) => setForm({ ...form, currency: e.target.value })}
-                  />
+                  >
+                    <option value="RUB">RUB (₽)</option>
+                    <option value="USD">USD ($)</option>
+                    <option value="EUR">EUR (€)</option>
+                  </select>
                 </div>
               </div>
 

@@ -6,7 +6,7 @@
 //   id uuid primary key default gen_random_uuid(),
 //   created_at timestamptz not null default now(),
 //   title text not null,
-//   category text not null check (category in ('clothing', 'accessories', 'gadgets', 'home', 'apps')),
+//   category text not null check (category in ('clothing', 'accessories', 'gadgets', 'home')),
 //   price numeric,
 //   currency text not null default 'USD',
 //   short_description text,
@@ -19,7 +19,7 @@
 // );
 // ------------------------------------------------------------------
 
-export type Category = "clothing" | "accessories" | "gadgets" | "home" | "apps";
+export type Category = "clothing" | "accessories" | "gadgets" | "home";
 
 export interface Product {
   id: string;

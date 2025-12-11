@@ -39,7 +39,7 @@ types/              # categoryLabels и утилиты для категорий
 
 - Таблица `products` в Supabase хранит все товары.  
 - Поля и типы описаны в `lib/types.ts`.  
-- Категории в базе: `clothing`, `accessories`, `gadgets`, `home`, `apps`.  
+- Категории в базе: `clothing`, `accessories`, `gadgets`, `home`.  
 - Русские лейблы хранятся в `types/product.ts` (`categoryLabels`).
 
 ## ✏️ Админка

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Category, categoryLabels } from "@/types/product";
 
-const categories: (Category | "all")[] = ["clothing", "accessories", "gadgets", "home", "apps", "all"];
+const categories: (Category | "all")[] = ["clothing", "accessories", "gadgets", "home", "all"];
 
 export default function Header() {
   const pathname = usePathname();

@@ -6,6 +6,12 @@ import { useEffect, useState } from "react";
 import { ProductWithSlug } from "@/lib/products";
 
 const isVideo = (src: string) => /\.mp4(\?|$)/i.test(src);
+const currencySymbol = (code?: string) => {
+  const map: Record<string, string> = { RUB: "₽", USD: "$", EUR: "€" };
+  if (!code) return map.RUB;
+  const upper = code.toUpperCase();
+  return map[upper] || code;
+};
 
 interface ProductCardProps {
   product: ProductWithSlug;
@@ -73,7 +79,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             {product.title}
           </h3>
           <p className="so-body text-gray-text shrink-0">
-            {product.price !== null ? `$${product.price}` : ""}
+            {product.price !== null ? `${currencySymbol(product.currency)}${product.price}` : ""}
           </p>
         </div>
         <p

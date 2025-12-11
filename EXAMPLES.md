@@ -11,7 +11,6 @@ export const categoryLabels: Record<Category, string> = {
   accessories: "Аксессуары",
   gadgets: "Гаджеты",
   home: "Дом",
-  apps: "Приложения",
 };
 ```
 
