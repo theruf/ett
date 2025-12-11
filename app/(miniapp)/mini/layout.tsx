@@ -5,6 +5,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
+import Head from "next/head";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -19,16 +20,16 @@ declare global {
 }
 
 const MiniAppShell: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [topInset, setTopInset] = useState(16);
+  const [topInset, setTopInset] = useState(40);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
     const tg = (window as any).Telegram?.WebApp;
     const safeTop = tg?.safeAreaInsets?.top;
     if (typeof safeTop === "number" && safeTop > 0) {
-      setTopInset(safeTop);
+      setTopInset(safeTop + 16);
     } else {
-      setTopInset(32);
+      setTopInset(48);
     }
   }, []);
 
@@ -63,12 +64,33 @@ export default function MiniLayout({ children }: MiniLayoutProps) {
     const webApp = window.Telegram!.WebApp;
     webApp.ready();
     webApp.expand?.();
-    webApp.requestFullscreen?.();
-    webApp.disableVerticalSwipes?.();
+    if (typeof webApp.disableVerticalSwipes === "function") {
+      webApp.disableVerticalSwipes();
+    }
+    if (typeof webApp.requestFullscreen === "function") {
+      webApp.requestFullscreen();
+    }
   }, [isTelegram]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const preventGesture = (e: Event) => {
+      e.preventDefault();
+    };
+    window.addEventListener("gesturestart", preventGesture, { passive: false });
+    return () => {
+      window.removeEventListener("gesturestart", preventGesture);
+    };
+  }, []);
 
   return (
     <>
+      <Head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+        />
+      </Head>
       <MiniAppShell>
         <Header />
         <main className="flex-grow">{children}</main>
