@@ -59,7 +59,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
         </div>
 
         {images.length > 1 && (
-          <div className="flex gap-2 overflow-x-auto pb-1">
+          <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar">
             {images.map((img, i) => (
               <button
                 key={img + i}
