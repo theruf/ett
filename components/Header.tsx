@@ -8,7 +8,7 @@ const categories: (Category | "all")[] = [
   "clothing",
   "accessories",
   "gadgets",
-  "apps",
+  "home",
   "all",
 ];
 

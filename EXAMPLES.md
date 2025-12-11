@@ -64,7 +64,7 @@ export type Category =
   | "clothing"
   | "accessories"
   | "gadgets"
-  | "apps"
+  | "home"
   | "books"
   | "music"
   | "movies"
@@ -86,7 +86,7 @@ const categories: Category[] = [
   "clothing",
   "accessories",
   "gadgets",
-  "apps",
+  "home",
   "books",
   "music",
   "movies",
@@ -103,7 +103,7 @@ const categories: Category[] = [
   "clothing",
   "accessories",
   "gadgets",
-  "apps",
+  "home",
   "books",
   "music",
   "movies",
@@ -121,7 +121,7 @@ export async function generateStaticParams() {
     "clothing",
     "accessories",
     "gadgets",
-    "apps",
+    "home",
     "books",
     "music",
     "movies",

@@ -177,7 +177,7 @@ export default function AdminDashboard() {
                   <option value="clothing">Clothing</option>
                   <option value="accessories">Accessories</option>
                   <option value="gadgets">Gadgets</option>
-                  <option value="apps">Apps</option>
+                  <option value="home">Home</option>
                 </select>
                 <input
                   className="border border-gray-light px-3 py-2 so-body"
@@ -273,7 +273,7 @@ export default function AdminDashboard() {
                     <option value="clothing">Clothing</option>
                     <option value="accessories">Accessories</option>
                     <option value="gadgets">Gadgets</option>
-                    <option value="apps">Apps</option>
+                    <option value="home">Home</option>
                   </select>
                 </div>
                 <div className="flex-1 min-w-[120px]">

@@ -7,7 +7,7 @@ export const categoryLabels = {
   clothing: "Clothing",
   accessories: "Accessories",
   gadgets: "Gadgets",
-  apps: "Apps",
+  home: "Home",
 } as const;
 
 // Get category from slug

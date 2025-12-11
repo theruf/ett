@@ -114,7 +114,7 @@ export type Category =
   | "clothing"
   | "accessories"
   | "gadgets"
-  | "apps"
+  | "home"
   | "books"
   | "music"
   | "movies"
@@ -131,7 +131,7 @@ export const categoryLabels: Record<Category, string> = {
   clothing: "Одежда",
   accessories: "Аксессуары",
   gadgets: "Гаджеты",
-  apps: "Приложения",
+home: "Home",
   books: "Книги",
   music: "Музыка",
   movies: "Кино",
@@ -149,7 +149,7 @@ const categories: Category[] = [
   "clothing",
   "accessories",
   "gadgets",
-  "apps",
+  "home",
   "books",
   "music",
   "movies",
@@ -167,7 +167,7 @@ const categories: Category[] = [
   "clothing",
   "accessories",
   "gadgets",
-  "apps",
+  "home",
   "books",
   "music",
   "movies",
@@ -186,7 +186,7 @@ export async function generateStaticParams() {
     "clothing",
     "accessories",
     "gadgets",
-    "apps",
+    "home",
     "books",
     "music",
     "movies",

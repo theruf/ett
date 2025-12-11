@@ -6,13 +6,13 @@ import Footer from "@/components/Footer";
 export const metadata: Metadata = {
   title: "ÉTT Market — Curated Collection",
   description:
-    "ÉTT Market is a curated showcase of interesting products, gadgets, apps, and services. We don't sell anything — we just show you the best and send you to the seller.",
+    "ÉTT Market is a curated showcase of interesting products, gadgets, home, and services. We don't sell anything — we just show you the best and send you to the seller.",
   keywords: [
     "curated",
     "showcase",
     "products",
     "gadgets",
-    "apps",
+    "home",
     "books",
     "music",
     "movies",
