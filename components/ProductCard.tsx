@@ -81,7 +81,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             product.is_sponsored ? "" : "invisible"
           }`}
         >
-          Sponsored
+          Реклама
         </p>
       </div>
     </Link>

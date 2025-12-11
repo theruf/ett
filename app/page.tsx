@@ -3,15 +3,6 @@ import { getAllProducts } from "@/lib/products";
 
 export const revalidate = 0;
 
-/**
- * ÉTT Market Homepage (still-object store/grid style)
- *
- * Structure:
- * - Centered tagline
- * - Products grid (6 columns on desktop, 2 on mobile)
- * - White background
- */
-
 export default async function HomePage() {
   const latestProducts = await getAllProducts();
 

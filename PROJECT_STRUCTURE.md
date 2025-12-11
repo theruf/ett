@@ -1,7 +1,7 @@
 # 📁 Структура проекта ÉTT Market
 
 ```
-urldrop/
+salut/
 │
 ├── app/                                # Next.js App Router (страницы)
 │   ├── category/
@@ -18,8 +18,8 @@ urldrop/
 │   ├── ProductCard.tsx                # Карточка товара
 │   └── ProductGrid.tsx                # Сетка карточек
 │
-├── types/                             # TypeScript типы
-│   └── product.ts                     # Типы Category и Product
+├── types/                             # TypeScript типы + русские лейблы категорий
+│   └── product.ts                     # Типы Category и Product, categoryLabels
 │
 ├── lib/                               # Логика/утилиты
 │   ├── supabaseClient.ts              # Клиент Supabase
@@ -35,7 +35,6 @@ urldrop/
 ├── postcss.config.mjs                 # Конфиг PostCSS
 ├── next.config.ts                     # Конфиг Next.js
 ├── tsconfig.json                      # Конфиг TypeScript
-├── .eslintrc.json                     # Конфиг ESLint
 ├── package.json                       # Зависимости и скрипты
 ├── .gitignore                         # Git ignore
 │
@@ -95,7 +94,6 @@ urldrop/
 | `postcss.config.mjs`       | PostCSS плагины (Tailwind + Autoprefixer)           |
 | `next.config.ts`           | Конфиг Next.js (remote patterns для изображений)    |
 | `tsconfig.json`            | Конфиг TypeScript (пути, строгость)                 |
-| `.eslintrc.json`           | Конфиг линтера                                      |
 | `package.json`             | Зависимости, скрипты, метаданные                    |
 
 ---

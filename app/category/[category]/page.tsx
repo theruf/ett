@@ -22,6 +22,7 @@ export async function generateStaticParams() {
     "accessories",
     "gadgets",
     "home",
+    "apps",
   ];
 
   return categories.map((category) => ({
@@ -37,7 +38,7 @@ export async function generateMetadata({ params }: CategoryPageProps) {
 
   if (!category) {
     return {
-      title: "Category Not Found — ÉTT Market",
+      title: "Категория не найдена — ÉTT Market",
     };
   }
 
@@ -45,7 +46,7 @@ export async function generateMetadata({ params }: CategoryPageProps) {
 
   return {
     title: `${categoryLabel} — ÉTT Market`,
-    description: `Curated collection of ${categoryLabel.toLowerCase()}. Only the best products and services.`,
+    description: `Подборка товаров категории: ${categoryLabel}.`,
   };
 }
 

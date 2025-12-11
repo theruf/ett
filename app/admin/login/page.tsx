@@ -20,7 +20,7 @@ export default function AdminLoginPage() {
     });
     if (!res.ok) {
       const data = await res.json();
-      setError(data.error || "Login failed");
+      setError(data.error || "Не удалось войти");
       setLoading(false);
       return;
     }
@@ -30,10 +30,10 @@ export default function AdminLoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-white px-4">
       <div className="w-full max-w-sm border border-gray-light rounded-sm p-6 shadow-sm">
-        <h1 className="so-heading text-gray-dark mb-4">ÉTT Market Admin</h1>
+        <h1 className="so-heading text-gray-dark mb-4">ÉTT Market — вход в админку</h1>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
-            <label className="so-body text-gray-dark mb-1 block">Password</label>
+            <label className="so-body text-gray-dark mb-1 block">Пароль</label>
             <input
               type="password"
               className="w-full border border-gray-light px-3 py-2 so-body"
@@ -48,7 +48,7 @@ export default function AdminLoginPage() {
             className="w-full bg-gray-dark text-white so-body py-2"
             disabled={loading}
           >
-            {loading ? "Logging in..." : "Log in"}
+            {loading ? "Входим..." : "Войти"}
           </button>
         </form>
       </div>

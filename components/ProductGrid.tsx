@@ -52,7 +52,7 @@ export default function ProductGrid({ products }: ProductGridProps) {
     return (
       <div className="text-center py-16">
         <p className="so-body">
-          No products in this category yet
+          Товары не найдены
         </p>
       </div>
     );
@@ -68,13 +68,13 @@ export default function ProductGrid({ products }: ProductGridProps) {
             setSortOrder(e.target.value as SortOrder)
           }
         >
-          <option value="default">Sort by Default</option>
-          <option value="priceDesc">Price: High to Low</option>
-          <option value="priceAsc">Price: Low to High</option>
-          <option value="newest">Date: New to Old</option>
-          <option value="oldest">Date: Old to New</option>
+          <option value="default">Сортировать: по умолчанию</option>
+          <option value="priceDesc">Цена: по убыванию</option>
+          <option value="priceAsc">Цена: по возрастанию</option>
+          <option value="newest">Дата: новые</option>
+          <option value="oldest">Дата: старые</option>
         </select>
-        <div className="so-body text-gray-dark">{sortedProducts.length} items</div>
+        <div className="so-body text-gray-dark">{sortedProducts.length} товаров</div>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">

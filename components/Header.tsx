@@ -4,13 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Category, categoryLabels } from "@/types/product";
 
-const categories: (Category | "all")[] = [
-  "clothing",
-  "accessories",
-  "gadgets",
-  "home",
-  "all",
-];
+const categories: (Category | "all")[] = ["clothing", "accessories", "gadgets", "home", "apps", "all"];
 
 export default function Header() {
   const pathname = usePathname();
@@ -43,7 +37,7 @@ export default function Header() {
                       : "text-gray-text hover:text-gray-dark"
                   }`}
                 >
-                  {category === "all" ? "All" : categoryLabels[category]}
+                  {category === "all" ? "Все" : categoryLabels[category]}
                 </Link>
               );
             })}

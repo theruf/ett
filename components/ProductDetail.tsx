@@ -79,7 +79,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
                 className={`relative shrink-0 border ${i === index ? "border-gray-dark" : "border-gray-light"}`}
                 style={{ width: 64, height: 64 }}
                 onClick={() => setIndex(i)}
-                aria-label={`Select image ${i + 1}`}
+                aria-label={`Выбрать изображение ${i + 1}`}
               >
                 {isVideo(img) ? (
                   <video
@@ -108,7 +108,13 @@ export default function ProductDetail({ product }: ProductDetailProps) {
 
       <div className="flex flex-col gap-4 order-2 lg:order-2 lg:sticky lg:top-16 lg:self-start">
         <div className="flex flex-col gap-1">
-          <p className="so-body text-gray-text capitalize">{product.category}</p>
+          <p className="so-body text-gray-text capitalize">
+            {product.category === "clothing" && "Одежда"}
+            {product.category === "accessories" && "Аксессуары"}
+            {product.category === "gadgets" && "Гаджеты"}
+            {product.category === "home" && "Дом"}
+            {product.category === "apps" && "Приложения"}
+          </p>
           <h1 className="so-heading text-gray-dark flex-1">{product.title}</h1>
           {product.price !== null && (
             <p className="so-body text-gray-dark">{`$${product.price}`}</p>
@@ -116,7 +122,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
         </div>
 
         <div className="border-t border-gray-light pt-6 flex flex-col gap-3">
-          <h2 className="so-body text-gray-dark">Description</h2>
+          <h2 className="so-body text-gray-dark">Описание</h2>
           <p className="so-body text-gray-text">
             {product.long_description || product.short_description}
           </p>
@@ -126,7 +132,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
             rel="noopener noreferrer"
             className="mt-2 w-full text-center bg-gray-dark text-white so-body py-3"
           >
-            View Product
+            Перейти к товару
           </a>
         </div>
       </div>

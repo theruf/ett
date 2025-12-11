@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Product, Category } from "@/lib/types";
+import { categoryLabels } from "@/types/product";
 
 type FormState = Partial<Product> & { images: string[] };
 
@@ -37,7 +38,7 @@ export default function AdminDashboard() {
     if (search) params.set("search", search);
     const res = await fetch(`/api/admin/products?${params.toString()}`);
     if (!res.ok) {
-      setError("Failed to load products");
+      setError("Не удалось загрузить товары");
       setLoading(false);
       return;
     }
@@ -59,10 +60,10 @@ export default function AdminDashboard() {
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Delete this product?")) return;
+    if (!confirm("Удалить этот товар?")) return;
     const res = await fetch(`/api/admin/products/${id}`, { method: "DELETE" });
     if (!res.ok) {
-      setError("Failed to delete");
+      setError("Не удалось удалить товар");
       return;
     }
     fetchProducts();
@@ -74,7 +75,7 @@ export default function AdminDashboard() {
     setError(null);
     const images = (form.images || []).filter(Boolean);
     if (!images.length) {
-      setError("At least one image URL is required");
+      setError("Добавьте хотя бы одну ссылку на изображение");
       return;
     }
 
@@ -101,10 +102,10 @@ export default function AdminDashboard() {
     });
     if (!res.ok) {
       const data = await res.json();
-      setError(data.error ? JSON.stringify(data.error) : "Save failed");
+      setError(data.error ? JSON.stringify(data.error) : "Не удалось сохранить");
       return;
     }
-    setMessage("Saved successfully");
+    setMessage("Сохранено");
     setForm(emptyForm);
     setEditing(null);
     fetchProducts();
@@ -152,14 +153,14 @@ export default function AdminDashboard() {
       <div className="max-w-screen-2xl mx-auto flex flex-col gap-6">
         <header className="flex flex-wrap items-center justify-between gap-4 border-b border-gray-light pb-4">
           <div>
-            <h1 className="so-heading text-gray-dark">ÉTT Market Admin</h1>
-            <p className="so-body text-gray-text">Manage curated products</p>
+            <h1 className="so-heading text-gray-dark">ÉTT Market — админка</h1>
+            <p className="so-body text-gray-text">Управление подборками товаров</p>
           </div>
           <button
             onClick={handleLogout}
             className="so-body text-gray-dark border border-gray-light px-3 py-1"
           >
-            Log out
+            Выйти
           </button>
         </header>
 
@@ -173,15 +174,16 @@ export default function AdminDashboard() {
                   value={category}
                   onChange={(e) => setCategory(e.target.value as Category | "all")}
                 >
-                  <option value="all">All</option>
-                  <option value="clothing">Clothing</option>
-                  <option value="accessories">Accessories</option>
-                  <option value="gadgets">Gadgets</option>
-                  <option value="home">Home</option>
+                  <option value="all">Все</option>
+                  <option value="clothing">Одежда</option>
+                  <option value="accessories">Аксессуары</option>
+                  <option value="gadgets">Гаджеты</option>
+                  <option value="home">Дом</option>
+                  <option value="apps">Приложения</option>
                 </select>
                 <input
                   className="border border-gray-light px-3 py-2 so-body"
-                  placeholder="Search"
+                  placeholder="Поиск"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   onKeyDown={(e) => {
@@ -196,17 +198,17 @@ export default function AdminDashboard() {
                   setForm(emptyForm);
                 }}
               >
-                Add product
+                Добавить товар
               </button>
             </div>
             <button
               className="so-meta text-gray-text text-left"
               onClick={fetchProducts}
             >
-              Refresh
+              Обновить
             </button>
             {loading ? (
-              <p className="so-body text-gray-text">Loading...</p>
+              <p className="so-body text-gray-text">Загрузка...</p>
             ) : (
               <div className="flex flex-col gap-2 max-h-[65vh] overflow-auto">
                 {filtered.map((p) => (
@@ -217,11 +219,11 @@ export default function AdminDashboard() {
                     <div className="flex-1">
                       <p className="so-body text-gray-dark">{p.title}</p>
                       <p className="so-meta text-gray-text">
-                        {p.category} • {p.currency || "USD"}
+                        {categoryLabels[p.category as Category]} • {p.currency || "USD"}
                         {p.price !== null && p.price !== undefined ? ` ${p.price}` : ""} • {p.source_label || ""}
                       </p>
                       <p className="so-meta text-gray-text">
-                        {p.is_sponsored ? "Sponsored" : ""} {p.is_affiliate ? "Affiliate" : ""}
+                        {p.is_sponsored ? "Реклама" : ""} {p.is_affiliate ? "Партнерский товар" : ""}
                       </p>
                     </div>
                     <div className="flex items-center gap-2">
@@ -229,13 +231,13 @@ export default function AdminDashboard() {
                         className="so-meta text-gray-dark border border-gray-light px-2 py-1"
                         onClick={() => handleEdit(p)}
                       >
-                        Edit
+                        Редактировать
                       </button>
                       <button
                         className="so-meta text-gray-text border border-gray-light px-2 py-1"
                         onClick={() => handleDelete(p.id)}
                       >
-                        Delete
+                        Удалить
                       </button>
                     </div>
                   </div>
@@ -248,12 +250,12 @@ export default function AdminDashboard() {
           {/* Form */}
           <div className="md:w-1/2 w-full border border-gray-light p-4 flex flex-col gap-4">
             <div className="flex items-center justify-between">
-              <h2 className="so-heading text-gray-dark">{editing ? "Edit product" : "New product"}</h2>
+              <h2 className="so-heading text-gray-dark">{editing ? "Редактировать товар" : "Новый товар"}</h2>
               {message && <span className="so-meta text-green-600">{message}</span>}
             </div>
             <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
               <div>
-                <label className="so-body text-gray-dark mb-1 block">Title *</label>
+                <label className="so-body text-gray-dark mb-1 block">Название *</label>
                 <input
                   className="w-full border border-gray-light px-3 py-2 so-body"
                   value={form.title || ""}
@@ -264,20 +266,21 @@ export default function AdminDashboard() {
 
               <div className="flex flex-wrap gap-3">
                 <div className="flex-1 min-w-[160px]">
-                  <label className="so-body text-gray-dark mb-1 block">Category</label>
+                  <label className="so-body text-gray-dark mb-1 block">Категория</label>
                   <select
                     className="w-full border border-gray-light px-3 py-2 so-body"
                     value={form.category}
                     onChange={(e) => setForm({ ...form, category: e.target.value as Category })}
                   >
-                    <option value="clothing">Clothing</option>
-                    <option value="accessories">Accessories</option>
-                    <option value="gadgets">Gadgets</option>
-                    <option value="home">Home</option>
-                  </select>
+                    <option value="clothing">Одежда</option>
+                  <option value="accessories">Аксессуары</option>
+                  <option value="gadgets">Гаджеты</option>
+                  <option value="home">Дом</option>
+                  <option value="apps">Приложения</option>
+                </select>
                 </div>
                 <div className="flex-1 min-w-[120px]">
-                  <label className="so-body text-gray-dark mb-1 block">Price</label>
+                  <label className="so-body text-gray-dark mb-1 block">Цена</label>
                   <input
                     type="number"
                     className="w-full border border-gray-light px-3 py-2 so-body"
@@ -290,7 +293,7 @@ export default function AdminDashboard() {
                   />
                 </div>
                 <div className="w-24">
-                  <label className="so-body text-gray-dark mb-1 block">Currency</label>
+                  <label className="so-body text-gray-dark mb-1 block">Валюта</label>
                   <input
                     className="w-full border border-gray-light px-3 py-2 so-body"
                     value={form.currency || "USD"}
@@ -300,7 +303,7 @@ export default function AdminDashboard() {
               </div>
 
               <div>
-                <label className="so-body text-gray-dark mb-1 block">Short description</label>
+                <label className="so-body text-gray-dark mb-1 block">Краткое описание</label>
                 <input
                   className="w-full border border-gray-light px-3 py-2 so-body"
                   value={form.short_description || ""}
@@ -309,7 +312,7 @@ export default function AdminDashboard() {
               </div>
 
               <div>
-                <label className="so-body text-gray-dark mb-1 block">Long description</label>
+                <label className="so-body text-gray-dark mb-1 block">Подробное описание</label>
                 <textarea
                   className="w-full border border-gray-light px-3 py-2 so-body"
                   rows={4}
@@ -320,9 +323,9 @@ export default function AdminDashboard() {
 
               <div className="flex flex-col gap-2">
                 <div className="flex items-center justify-between">
-                  <label className="so-body text-gray-dark">Images (URLs) *</label>
+                  <label className="so-body text-gray-dark">Изображения (URL) *</label>
                   <button type="button" className="so-meta text-gray-dark" onClick={addImageField}>
-                    + Add image
+                    + Добавить изображение
                   </button>
                 </div>
                 {(form.images || []).map((img, idx) => (
@@ -369,19 +372,19 @@ export default function AdminDashboard() {
                         ↓
                       </button>
                     </div>
-                    <button
-                      type="button"
-                      className="so-meta text-gray-text border border-gray-light px-2 py-1"
-                      onClick={() => removeImageField(idx)}
-                    >
-                      Remove
-                    </button>
+                  <button
+                    type="button"
+                    className="so-meta text-gray-text border border-gray-light px-2 py-1"
+                    onClick={() => removeImageField(idx)}
+                  >
+                    Удалить
+                  </button>
                   </div>
                 ))}
               </div>
 
               <div>
-                <label className="so-body text-gray-dark mb-1 block">External URL *</label>
+                <label className="so-body text-gray-dark mb-1 block">Ссылка на маркетплейс *</label>
                 <input
                   className="w-full border border-gray-light px-3 py-2 so-body"
                   value={form.external_url || ""}
@@ -391,7 +394,7 @@ export default function AdminDashboard() {
               </div>
 
               <div>
-                <label className="so-body text-gray-dark mb-1 block">Source label</label>
+                <label className="so-body text-gray-dark mb-1 block">Маркетплейс</label>
                 <input
                   className="w-full border border-gray-light px-3 py-2 so-body"
                   value={form.source_label || ""}
@@ -406,7 +409,7 @@ export default function AdminDashboard() {
                     checked={form.is_sponsored || false}
                     onChange={(e) => setForm({ ...form, is_sponsored: e.target.checked })}
                   />
-                  Sponsored
+                  Реклама
                 </label>
                 <label className="flex items-center gap-2 so-body text-gray-dark">
                   <input
@@ -414,7 +417,7 @@ export default function AdminDashboard() {
                     checked={form.is_affiliate || false}
                     onChange={(e) => setForm({ ...form, is_affiliate: e.target.checked })}
                   />
-                  Affiliate
+                  Партнерский товар
                 </label>
               </div>
 
@@ -422,7 +425,7 @@ export default function AdminDashboard() {
 
               <div className="flex items-center gap-3">
                 <button type="submit" className="border border-gray-light px-4 py-2 so-body bg-white text-gray-dark">
-                  Save
+                  Сохранить
                 </button>
                 <button
                   type="button"
@@ -432,7 +435,7 @@ export default function AdminDashboard() {
                     setForm(emptyForm);
                   }}
                 >
-                  Cancel
+                  Отмена
                 </button>
               </div>
             </form>
