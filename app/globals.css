@@ -59,11 +59,13 @@
 @layer base {
   html {
     @apply scroll-smooth;
+    scrollbar-width: none;
   }
 
   body {
     font-family: "Inter", "Inter Placeholder", sans-serif;
     @apply text-gray-dark;
+    scrollbar-width: none;
   }
 
   /* Remove default link styles */
@@ -196,6 +198,11 @@
     scrollbar-width: none;
   }
   .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
     display: none;
   }
 }
