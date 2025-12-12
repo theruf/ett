@@ -10,6 +10,11 @@ const formatPrice = (price: number) => {
   return new Intl.NumberFormat("en-US").format(price).replace(/,/g, " ");
 };
 
+const formatPriceText = (price: number | null | undefined) => {
+  if (price === null || price === undefined) return "";
+  return formatPrice(price);
+};
+
 const emptyForm: FormState = {
   title: "",
   category: "clothing",
@@ -61,7 +66,11 @@ export default function AdminDashboard() {
 
   const handleEdit = (p: Product) => {
     setEditing(p);
-    setForm({ ...p, images: p.images.length ? p.images : [""] });
+    setForm({
+      ...p,
+      images: p.images.length ? p.images : [""],
+      priceText: formatPriceText(p.price),
+    });
   };
 
   const handleDelete = async (id: string) => {
@@ -311,7 +320,7 @@ export default function AdminDashboard() {
                   <input
                     type="text"
                     className="w-full border border-gray-light px-3 py-2 so-body"
-                    value={form.priceText ?? ""}
+                    value={form.priceText ?? formatPriceText(form.price)}
                     onChange={(e) =>
                       setForm({ ...form, priceText: e.target.value })
                     }
