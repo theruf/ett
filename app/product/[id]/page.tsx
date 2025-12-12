@@ -2,6 +2,9 @@ import { notFound } from "next/navigation";
 import ProductDetail from "@/components/ProductDetail";
 import { getProductById, getProductBySlug } from "@/lib/products";
 
+export const revalidate = 0;
+export const dynamic = "force-dynamic";
+
 interface ProductPageProps {
   params: Promise<{
     id: string;

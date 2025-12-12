@@ -3,6 +3,9 @@ import ProductGrid from "@/components/ProductGrid";
 import { getProductsByCategory } from "@/lib/products";
 import { categoryFromSlug, categoryLabels, Category } from "@/types/product";
 
+export const revalidate = 0;
+export const dynamic = "force-dynamic";
+
 /**
  * Dynamic category page
  *
