@@ -123,7 +123,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
           )}
         </div>
 
-        <div className="border-t border-gray-light pt-4 flex flex-col gap-4">
+        <div className="border-t border-gray-light pt-3 flex flex-col gap-3">
           <a
             href={product.external_url}
             target="_blank"
