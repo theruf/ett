@@ -123,12 +123,12 @@ export default function ProductDetail({ product }: ProductDetailProps) {
           )}
         </div>
 
-        <div className="border-t border-gray-light pt-6 flex flex-col gap-3">
+        <div className="border-t border-gray-light pt-4 flex flex-col gap-4">
           <a
             href={product.external_url}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-2 w-full text-center bg-gray-dark text-white so-body py-3"
+            className="w-full text-center bg-gray-dark text-white so-body py-3"
           >
             Перейти к товару
           </a>
