@@ -124,7 +124,6 @@ export default function ProductDetail({ product }: ProductDetailProps) {
         </div>
 
         <div className="border-t border-gray-light pt-6 flex flex-col gap-3">
-          <h2 className="so-body text-gray-dark">Описание</h2>
           <a
             href={product.external_url}
             target="_blank"
@@ -133,6 +132,7 @@ export default function ProductDetail({ product }: ProductDetailProps) {
           >
             Перейти к товару
           </a>
+          <h2 className="so-body text-gray-dark">Описание</h2>
           <p className="so-body text-gray-text">
             {product.long_description || product.short_description}
           </p>
