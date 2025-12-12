@@ -8,8 +8,6 @@ interface ProductPageProps {
   }>;
 }
 
-export const revalidate = 0;
-
 export default async function ProductPage({ params }: ProductPageProps) {
   const { id } = await params;
   const product = /^\d+$/.test(id) ? await getProductBySlug(id) : await getProductById(id);

@@ -78,12 +78,8 @@ export default function ProductGrid({ products }: ProductGridProps) {
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-        {sortedProducts.map((product, index) => (
-          <div
-            key={product.id}
-            className="animate-fade-up"
-            style={{ animationDelay: `${index * 20}ms` }}
-          >
+        {sortedProducts.map((product) => (
+          <div key={product.id}>
             <ProductCard product={product} />
           </div>
         ))}

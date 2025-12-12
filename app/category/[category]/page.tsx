@@ -29,8 +29,6 @@ export async function generateStaticParams() {
   }));
 }
 
-export const revalidate = 0;
-
 export async function generateMetadata({ params }: CategoryPageProps) {
   const { category: categorySlug } = await params;
   const category = categoryFromSlug(categorySlug);

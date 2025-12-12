@@ -1,8 +1,6 @@
 import ProductGrid from "@/components/ProductGrid";
 import { getAllProducts } from "@/lib/products";
 
-export const revalidate = 0;
-
 export default async function HomePage() {
   const latestProducts = await getAllProducts();
 
