@@ -60,14 +60,12 @@
   html {
     @apply scroll-smooth;
     scrollbar-width: none;
-    overscroll-behavior-y: none;
   }
 
   body {
     font-family: "Inter", "Inter Placeholder", sans-serif;
     @apply text-gray-dark;
     scrollbar-width: none;
-    overscroll-behavior-y: none;
   }
 
   /* Remove default link styles */
