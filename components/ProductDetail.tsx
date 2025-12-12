@@ -133,9 +133,9 @@ export default function ProductDetail({ product }: ProductDetailProps) {
             Перейти к товару
           </a>
           <h2 className="so-body text-gray-dark">Описание</h2>
-          <p className="so-body text-gray-text">
+          <div className="so-body text-gray-text whitespace-pre-line">
             {product.long_description || product.short_description}
-          </p>
+          </div>
         </div>
       </div>
     </div>
