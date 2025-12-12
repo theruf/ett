@@ -22,7 +22,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <Link
       href={`/product/${product.slug}`}
-      className="block bg-white overflow-hidden transition-opacity hover:opacity-70"
+      className="block bg-white overflow-hidden"
     >
       {/* Product image - portrait 3:4 ratio */}
       <div
