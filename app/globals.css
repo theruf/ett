@@ -58,14 +58,15 @@
 
 @layer base {
   html {
-    @apply scroll-smooth;
     scrollbar-width: none;
+    min-height: 100%;
   }
 
   body {
     font-family: "Inter", "Inter Placeholder", sans-serif;
     @apply text-gray-dark;
     scrollbar-width: none;
+    min-height: 100%;
   }
 
   /* Remove default link styles */
